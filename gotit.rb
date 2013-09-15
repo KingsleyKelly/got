@@ -6,8 +6,9 @@ def human_sort (items)
   items.sort_by { |item| item.to_s.split(/(\d+)/).map { |e| [e.to_i, e] } }
 end
 #
-# Create a collection of snapshots at commit time for 
+# Create a collection of snapshots at commit time for
 #
+
 output_file = ARGV[1].nil? ?  "animation" : ARGV[1]
 browser = Watir::Browser.new
 branch = `git branch | sed -n '/\* /s///p'`
@@ -15,7 +16,8 @@ shas = `git rev-list #{branch}`
 shas = shas.split("\n").reverse
 temp = 'tmp' + Time.now.to_i.to_s
 `mkdir #{temp}`
-a = []
+`git stash`
+
 shas.each_with_index do |sha, index|
   `git checkout #{sha}`
   browser.goto ARGV[0]
@@ -34,4 +36,4 @@ Dir.chdir("#{temp}") do
 end
 
 `rm -rf #{temp}`
-
+`git stash apply`
