@@ -6,7 +6,7 @@ def human_sort (items)
   items.sort_by { |item| item.to_s.split(/(\d+)/).map { |e| [e.to_i, e] } }
 end
 #
-# Create a collection of snapshots at commit time for
+# Create a gif of a page state over previous commits.
 #
 
 output_file = ARGV[1].nil? ?  "animation" : ARGV[1]
